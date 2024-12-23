@@ -1,1 +1,9 @@
+{
+  "resourceGroupName": {
+    "value": "adq-deploy-rg"
+  },
+  "location": {
+    "value": "East US"
+  }
+}
 
