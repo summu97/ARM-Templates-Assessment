@@ -1,0 +1,8 @@
+{
+  "resourceGroupName": {
+    "value": "myResourceGroup"
+  },
+  "location": {
+    "value": "East US"
+  }
+}
