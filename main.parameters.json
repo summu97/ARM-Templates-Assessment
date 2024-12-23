@@ -1,6 +1,6 @@
 {
   "resourceGroupName": {
-    "value": "myResourceGroup"
+    "value": "adq-deploy-rg"
   },
   "location": {
     "value": "East US"
