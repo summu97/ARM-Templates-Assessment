@@ -1,35 +1,20 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+  "resources": [],
   "parameters": {
     "resourceGroupName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Resource Group to be created"
+      }
     },
     "location": {
       "type": "string",
-      "defaultValue": "eastus",
+      "defaultValue": "East US",
       "metadata": {
-        "description": "Location of the resource group"
+        "description": "Region where the Resource Group will be created"
       }
-    }
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Resources/resourceGroups",
-      "apiVersion": "2021-04-01",
-      "location": "[parameters('location')]",
-      "name": "[parameters('resourceGroupName')]",
-      "properties": {}
-    }
-  ],
-  "outputs": {
-    "resourceGroupName": {
-      "type": "string",
-      "value": "[parameters('resourceGroupName')]"
-    },
-    "resourceGroupLocation": {
-      "type": "string",
-      "value": "[parameters('location')]"
     }
   }
 }
