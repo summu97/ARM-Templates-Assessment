@@ -1,1 +1,31 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworks_adq_az_vnet_name": {
+      "value": "adq-az-vnet"
+    },
+    "applicationGateways_adq_az_appgateway_name": {
+      "value": "adq-az-appgateway"
+    },
+    "azureBastionSubnetName": {
+      "value": "AzureBastionSubnet"
+    },
+    "azureBastionSubnetCidr": {
+      "value": "10.0.1.0/26"
+    },
+    "albSubnetName": {
+      "value": "ALB-Subnet"
+    },
+    "albSubnetCidr": {
+      "value": "10.0.0.0/24"
+    },
+    "appGatewaySubnetName": {
+      "value": "AppGateway-Subnet"
+    },
+    "appGatewaySubnetCidr": {
+      "value": "10.0.2.0/24"
+    }
+  }
+}
 
