@@ -13,6 +13,42 @@
       "metadata": {
         "description": "The name of the application gateway."
       }
+    },
+    "azureBastionSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Azure Bastion Subnet."
+      }
+    },
+    "azureBastionSubnetCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "The CIDR block for the Azure Bastion Subnet."
+      }
+    },
+    "albSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the ALB Subnet."
+      }
+    },
+    "albSubnetCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "The CIDR block for the ALB Subnet."
+      }
+    },
+    "appGatewaySubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Application Gateway Subnet."
+      }
+    },
+    "appGatewaySubnetCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "The CIDR block for the Application Gateway Subnet."
+      }
     }
   },
   "resources": [
@@ -39,11 +75,11 @@
         },
         "subnets": [
           {
-            "name": "AzureBastionSubnet",
-            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), 'AzureBastionSubnet')]",
+            "name": "[parameters('azureBastionSubnetName')]",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), parameters('azureBastionSubnetName'))]",
             "properties": {
               "addressPrefixes": [
-                "10.0.1.0/26"
+                "[parameters('azureBastionSubnetCidr')]"
               ],
               "serviceEndpoints": [],
               "delegations": [],
@@ -53,11 +89,11 @@
             "type": "Microsoft.Network/virtualNetworks/subnets"
           },
           {
-            "name": "ALB-Subnet",
-            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), 'ALB-Subnet')]",
+            "name": "[parameters('albSubnetName')]",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), parameters('albSubnetName'))]",
             "properties": {
               "addressPrefixes": [
-                "10.0.0.0/24"
+                "[parameters('albSubnetCidr')]"
               ],
               "serviceEndpoints": [],
               "delegations": [],
@@ -67,11 +103,11 @@
             "type": "Microsoft.Network/virtualNetworks/subnets"
           },
           {
-            "name": "AppGateway-Subnet",
-            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), 'AppGateway-Subnet')]",
+            "name": "[parameters('appGatewaySubnetName')]",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), parameters('appGatewaySubnetName'))]",
             "properties": {
               "addressPrefixes": [
-                "10.0.2.0/24"
+                "[parameters('appGatewaySubnetCidr')]"
               ],
               "applicationGatewayIPConfigurations": [
                 {
@@ -91,4 +127,3 @@
     }
   ]
 }
-
