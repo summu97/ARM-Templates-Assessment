@@ -1,1 +1,94 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworks_adq_az_vnet_name": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the virtual network."
+      }
+    },
+    "applicationGateways_adq_az_appgateway_name": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the application gateway."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2024-01-01",
+      "name": "[parameters('virtualNetworks_adq_az_vnet_name')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_adq_az_appgateway_name'))]"
+      ],
+      "tags": {
+        "vnet": "adq-az-vnet"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "encryption": {
+          "enabled": false,
+          "enforcement": "AllowUnencrypted"
+        },
+        "subnets": [
+          {
+            "name": "AzureBastionSubnet",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), 'AzureBastionSubnet')]",
+            "properties": {
+              "addressPrefixes": [
+                "10.0.1.0/26"
+              ],
+              "serviceEndpoints": [],
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            },
+            "type": "Microsoft.Network/virtualNetworks/subnets"
+          },
+          {
+            "name": "ALB-Subnet",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), 'ALB-Subnet')]",
+            "properties": {
+              "addressPrefixes": [
+                "10.0.0.0/24"
+              ],
+              "serviceEndpoints": [],
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            },
+            "type": "Microsoft.Network/virtualNetworks/subnets"
+          },
+          {
+            "name": "AppGateway-Subnet",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_adq_az_vnet_name'), 'AppGateway-Subnet')]",
+            "properties": {
+              "addressPrefixes": [
+                "10.0.2.0/24"
+              ],
+              "applicationGatewayIPConfigurations": [
+                {
+                  "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_adq_az_appgateway_name')), '/gatewayIPConfigurations/appGatewayIpConfig')]"
+                }
+              ],
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            },
+            "type": "Microsoft.Network/virtualNetworks/subnets"
+          }
+        ],
+        "virtualNetworkPeerings": [],
+        "enableDdosProtection": false
+      }
+    }
+  ]
+}
 
