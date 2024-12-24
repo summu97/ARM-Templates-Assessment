@@ -72,13 +72,6 @@
         "description": "Name of the public IP address for the application gateway."
       }
     },
-    "publicIPAddresses_adq_az_vnet_bastion_name": {
-      "type": "string",
-      "defaultValue": "adq-az-bastion-ip",
-      "metadata": {
-        "description": "Name of the public IP address for the Bastion host."
-      }
-    },
     "applicationGateways_adq_az_appgateway_name": {
       "type": "string",
       "defaultValue": "adq-az-appgateway",
@@ -172,26 +165,6 @@
         "ipAddress": "48.216.182.111",
         "idleTimeoutInMinutes": 4,
         "ipTags": []
-      }
-    },
-    {
-      "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2024-01-01",
-      "name": "[parameters('publicIPAddresses_adq_az_vnet_bastion_name')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard",
-        "tier": "Regional"
-      },
-      "properties": {
-        "publicIPAddressVersion": "IPv4",
-        "publicIPAllocationMethod": "Static",
-        "ipAddress": "172.190.156.221",
-        "idleTimeoutInMinutes": 4,
-        "ipTags": [],
-        "ddosSettings": {
-          "protectionMode": "VirtualNetworkInherited"
-        }
       }
     }
   ]
