@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "networkInterfaces_adq_az_sqlvm_name": {
+      "value": "sqlvm-nic"
+    },
+    "networkInterfaces_adq_az_appvm01_name": {
+      "value": "appvm01-nic"
+    },
+    "networkInterfaces_adq_az_appvm02_name": {
+      "value": "appvm02-nic"
+    },
+    "networkSecurityGroups_adq_az_sqlvm_nsg_name": {
+      "value": "sqlvm-nsg"
+    },
+    "networkSecurityGroups_adq_az_app_nsg_name": {
+      "value": "app-nsg"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "virtualNetworks_adq_az_vnet_name": {
+      "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
+    },
+    "applicationGateways_adq_az_appgateway_name": {
+      "value": "adq-az-appgateway"
+    },
+    "backendPoolName": {
+      "defaultValue": "adq-az-backendpool"
+    }
+  }
+}
