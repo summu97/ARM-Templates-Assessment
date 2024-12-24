@@ -31,6 +31,12 @@
     },
     "applicationGateways_adq_az_appgateway_name": {
       "value": "adq-az-appgateway"
+    },
+    "publicIPAddresses_adq_az_appgateway_ip_name": {
+      "value": "adq-az-appgateway-ip"
+    },
+    "publicIPAddresses_adq_az_vnet_bastion_name": {
+      "value": "adq-az-bastion-ip"
     }
   }
 }
