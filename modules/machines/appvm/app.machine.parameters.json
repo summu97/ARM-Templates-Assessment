@@ -61,7 +61,7 @@
             "value": "VM-Subnet"
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
+            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
         },
         "virtualMachineName": {
             "value": "adq-az-appvm01"
@@ -82,7 +82,7 @@
             "value": "Delete"
         },
         "virtualMachineSize": {
-            "value": "Standard_DC2s_v2"
+            "value": "Standard_DS1_v2"
         },
         "nicDeleteOption": {
             "value": "Detach"
@@ -115,6 +115,21 @@
             "value": true
         },
         "virtualMachine1Zone": {
+            "value": "1"
+        },
+        "networkInterfaceName2": {
+            "value": "adq-az-appvm02-interface"
+        },
+        "networkSecurityGroupName02": {
+            "value": "ad-z-appvm02-nsg"
+        },
+        "virtualMachineName2": {
+            "value": "adq-az-appvm02"
+        },
+        "virtualMachineComputerName2": {
+            "value": "adq-az-appvm02"
+        },
+        "virtualMachine2Zone": {
             "value": "1"
         }
     }
