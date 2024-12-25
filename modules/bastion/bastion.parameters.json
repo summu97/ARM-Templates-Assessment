@@ -27,7 +27,7 @@
             "value": false
         },
         "subnetId": {
-            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet/subnets/AzureBastionSubnet"
+            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet/subnets/AzureBastionSubnet"
         },
         "enableKerberos": {
             "value": false
