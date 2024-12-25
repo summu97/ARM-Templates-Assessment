@@ -1,0 +1,108 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "centralus"
+        },
+        "sqlnetworkInterfaceName1": {
+            "value": "adq-az-sqlvm-interface"
+        },
+        "enableAcceleratedNetworking": {
+            "value": true
+        },
+        "sqlnetworkSecurityGroupName": {
+            "value": "adq-az-sqlvm-nsg"
+        },
+        "sqlnetworkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                },
+                {
+                    "name": "TCP",
+                    "properties": {
+                        "priority": 310,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "1433"
+                    }
+                }
+            ]
+        },
+        "sqlsubnetName": {
+            "value": "VM-Subnet"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
+        },
+        "sqlvirtualMachineName": {
+            "value": "adq-az-sqlvm"
+        },
+        "sqlvirtualMachineName1": {
+            "value": "adq-az-sqlvm"
+        },
+        "sqlvirtualMachineComputerName1": {
+            "value": "adq-az-sqlvm"
+        },
+        "virtualMachineRG": {
+            "value": "adq-deploy-rg"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_DC2s_v2"
+        },
+        "nicDeleteOption": {
+            "value": "Detach"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "adminUsername": {
+            "value": "azureuser"
+        },
+        "adminPassword": {
+            "value": "azureuser@4321"
+        },
+        "patchMode": {
+            "value": "AutomaticByPlatform"
+        },
+        "rebootSetting": {
+            "value": "IfRequired"
+        },
+        "customData": {
+            "value": "IyEvYmluL2Jhc2gKCiMgVXBkYXRlIHRoZSBzeXN0ZW0gcmVwb3NpdG9yaWVzCnN1ZG8gYXB0IHVwZGF0ZQoKIyBJbnN0YWxsIGN1cmwgZm9yIGRvd25sb2FkaW5nIHJlcXVpcmVkIGZpbGVzCnN1ZG8gYXB0IGluc3RhbGwgLXkgY3VybAoKIyBBZGQgTWljcm9zb2Z0IEdQRyBrZXkgZm9yIFNRTCBTZXJ2ZXIgcmVwb3NpdG9yeQpjdXJsIGh0dHBzOi8vcGFja2FnZXMubWljcm9zb2Z0LmNvbS9rZXlzL21pY3Jvc29mdC5hc2MgfCBzdWRvIHRlZSAvZXRjL2FwdC90cnVzdGVkLmdwZy5kL21pY3Jvc29mdC5hc2MgPiAvZGV2L251bGwKCiMgQWRkIFNRTCBTZXJ2ZXIgMjAyMiByZXBvc2l0b3J5CmN1cmwgLWZzU0wgaHR0cHM6Ly9wYWNrYWdlcy5taWNyb3NvZnQuY29tL2NvbmZpZy91YnVudHUvMjIuMDQvbXNzcWwtc2VydmVyLTIwMjIubGlzdCB8IHN1ZG8gdGVlIC9ldGMvYXB0L3NvdXJjZXMubGlzdC5kL21zc3FsLXNlcnZlci0yMDIyLmxpc3QgPiAvZGV2L251bGwKCiMgVXBkYXRlIHRoZSByZXBvc2l0b3J5IGxpc3QKc3VkbyBhcHQgdXBkYXRlCgojIEluc3RhbGwgU1FMIFNlcnZlcgpzdWRvIGFwdCBpbnN0YWxsIC15IG1zc3FsLXNlcnZlcgoKIyBDb25maWd1cmUgU1FMIFNlcnZlciB3aXRoIERldmVsb3BlciBlZGl0aW9uIGFuZCBhIHN0cm9uZyBTQSBwYXNzd29yZApzdWRvIE1TU1FMX1BJRD0iRGV2ZWxvcGVyIiBBQ0NFUFRfRVVMQT1ZIE1TU1FMX1NBX1BBU1NXT1JEPSJZb3VyU3Ryb25nUGFzc3dvcmQxMjMiIC9vcHQvbXNzcWwvYmluL21zc3FsLWNvbmYgLW4gc2V0dXAKCiMgQWRkIE1pY3Jvc29mdCBHUEcga2V5IGZvciB0b29scwpjdXJsIGh0dHBzOi8vcGFja2FnZXMubWljcm9zb2Z0LmNvbS9rZXlzL21pY3Jvc29mdC5hc2MgfCBzdWRvIHRlZSAvZXRjL2FwdC90cnVzdGVkLmdwZy5kL21pY3Jvc29mdC5hc2MgPiAvZGV2L251bGwKCiMgQWRkIE1pY3Jvc29mdCByZXBvc2l0b3J5IGZvciB0b29scwpjdXJsIC1mc1NMIGh0dHBzOi8vcGFja2FnZXMubWljcm9zb2Z0LmNvbS9jb25maWcvdWJ1bnR1LzIyLjA0L3Byb2QubGlzdCB8IHN1ZG8gdGVlIC9ldGMvYXB0L3NvdXJjZXMubGlzdC5kL21zc3FsLXJlbGVhc2UubGlzdCA+IC9kZXYvbnVsbAoKIyBVcGRhdGUgdGhlIHJlcG9zaXRvcnkgbGlzdCBhZ2FpbgpzdWRvIGFwdCB1cGRhdGUKCiMgSW5zdGFsbCBTUUwgU2VydmVyIHRvb2xzIGFuZCBkZXBlbmRlbmNpZXMKc3VkbyBBQ0NFUFRfRVVMQT1ZIGFwdC1nZXQgaW5zdGFsbCAteSBtc3NxbC10b29sczE4IHVuaXhvZGJjLWRldgoKIyBBZGQgU1FMIFNlcnZlciB0b29scyB0byB0aGUgZ2xvYmFsIFBBVEgKZWNobyAnZXhwb3J0IFBBVEg9IiRQQVRIOi9vcHQvbXNzcWwtdG9vbHMxOC9iaW4iJyB8IHN1ZG8gdGVlIC1hIC9ldGMvcHJvZmlsZSA+IC9kZXYvbnVsbAplY2hvICdleHBvcnQgUEFUSD0iJFBBVEg6L29wdC9tc3NxbC10b29sczE4L2JpbiInIHwgc3VkbyB0ZWUgLWEgL2V0Yy9iYXNoLmJhc2hyYyA+IC9kZXYvbnVsbAoKIyBTb3VyY2UgL2V0Yy9wcm9maWxlIHRvIGFwcGx5IGNoYW5nZXMgZm9yIHRoZSBjdXJyZW50IHNoZWxsCnNvdXJjZSAvZXRjL3Byb2ZpbGUKCiMgRW5zdXJlIHRoZSBlbnZpcm9ubWVudCB2YXJpYWJsZXMgYXJlIHNldCBnbG9iYWxseQpzdWRvIHN1IC1jICJlY2hvICdleHBvcnQgUEFUSD1cIiRQQVRIOi9vcHQvbXNzcWwtdG9vbHMxOC9iaW5cIicgPj4gL2hvbWUvYXp1cmV1c2VyLy5iYXNocmMiCnN1ZG8gc3UgLWMgInNvdXJjZSAvaG9tZS9henVyZXVzZXIvLmJhc2hyYyIKCiMgUmVzdGFydCBTUUwgU2VydmVyIGlmIG5lZWRlZCAodG8gZW5zdXJlIGl0J3MgcnVubmluZykKc3VkbyBzeXN0ZW1jdGwgc3RhcnQgbXNzcWwtc2VydmVyCgojIENyZWF0ZSB0aGUgRGF0YWJhc2UKc3VkbyBzdSAtIGF6dXJldXNlciAtYyAiY2QgL2hvbWUvYXp1cmV1c2VyICYmIHNxbGNtZCAtUyBsb2NhbGhvc3QgLVUgc2EgLVAgJ1lvdXJTdHJvbmdQYXNzd29yZDEyMycgLVEgXCJDUkVBVEUgREFUQUJBU0UgVGVzdERCO1wiIC1DIgoKIyBDcmVhdGUgVGFibGUgaW4gdGhlIG5ld2x5IGNyZWF0ZWQgZGF0YWJhc2UKc3VkbyBzdSAtIGF6dXJldXNlciAtYyAiY2QgL2hvbWUvYXp1cmV1c2VyICYmIHNxbGNtZCAtUyBsb2NhbGhvc3QgLVUgc2EgLVAgJ1lvdXJTdHJvbmdQYXNzd29yZDEyMycgLVEgXCJVU0UgVGVzdERCOyBDUkVBVEUgVEFCTEUgVXNlcnMgKElEIElOVCBJREVOVElUWSgxLDEpIFBSSU1BUlkgS0VZLCBOYW1lIE5WQVJDSEFSKDEwMCksIEVtYWlsIE5WQVJDSEFSKDEwMCksIENvbnRhY3QgTlZBUkNIQVIoMTUpKTtcIiAtQyIKCiMgUmVzdGFydCB5b3VyIFZNIHRvIGFkZCBjaGFuZ2VzCnN1ZG8gc2h1dGRvd24gLXIgbm93Cg=="
+        },
+        "securityType": {
+            "value": "TrustedLaunch"
+        },
+        "secureBoot": {
+            "value": true
+        },
+        "vTPM": {
+            "value": true
+        },
+        "virtualMachine1Zone": {
+            "value": "1"
+        }
+    }
+}
