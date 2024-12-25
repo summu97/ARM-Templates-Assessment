@@ -2,9 +2,9 @@ trigger:
 - main  # Adjust based on your branch
 
 variables:
-  azureServiceConnection: '5e5ac00a-894e-442c-9b9a-871f80a7fac4'  # Replace with your Azure service connection ID
+  azureServiceConnection: 'e03612ce-bd7c-4557-ae2f-f1ee8f720fa3'  # Replace with your Azure service connection ID
   subscriptionId: '51f41f85-b52c-4d95-a2f5-28303cbdb6ec'           # Replace with your Azure subscription ID
-  resourceGroupName: 'adq-deploy-rg'                               # Replace with your Resource Group name
+  resourceGroupName: 'adq-appdeploy-rg'                               # Replace with your Resource Group name
   location: 'Central US'                                              # Replace with your Azure region
   vnetTemplateFile: 'modules/vnet/vnet.json'                                    # Path to VNet ARM template file
   vnetParametersFile: 'modules/vnet/vnet.parameters.json'                       # Path to VNet parameters file
@@ -14,6 +14,8 @@ variables:
   bastionParametersFile: 'modules/bastion/bastion.parameters.json'                     # Path to Bastion parameters file
   sqlTemplateFile: 'modules/machines/sqlvm/sql.machine.json'                                  # Path to sql ARM template file
   sqlParametersFile: 'modules/machines/sqlvm/sql.machine.parameters.json'                     # Path to sql parameters file
+  lbTemplateFile: 'modules/loadbalancer/lb.json'                                  # Path to lb ARM template file
+  lbParametersFile: 'modules/loadbalancer/lb.parameters.json'                     # Path to lb parameters file
 
 
 stages:
@@ -98,5 +100,27 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(sqlTemplateFile)'
         csmParametersFile: '$(sqlParametersFile)'
+        deploymentMode: 'Incremental'
+        additionalArguments: '--verbose'
+
+
+- stage: Deploylb
+  displayName: 'Deploy lb'
+  jobs:
+  - job: DeployResources
+    displayName: 'Deploy lb'
+    steps:
+    - checkout: self  # Ensures code is available on the agent
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '$(azureServiceConnection)'
+        subscriptionId: '$(subscriptionId)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(lbTemplateFile)'
+        csmParametersFile: '$(lbParametersFile)'
         deploymentMode: 'Incremental'
         additionalArguments: '--verbose'
