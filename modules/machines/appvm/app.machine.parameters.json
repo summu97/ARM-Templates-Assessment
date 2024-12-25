@@ -1,0 +1,121 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "centralus"
+        },
+        "networkInterfaceName1": {
+            "value": "adq-az-appvm01-interface"
+        },
+        "enableAcceleratedNetworking": {
+            "value": true
+        },
+        "networkSecurityGroupName": {
+            "value": "ad-z-appvm01-nsg"
+        },
+        "networkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                },
+                {
+                    "name": "AllowAnyCustom8080Inbound",
+                    "properties": {
+                        "priority": 310,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "8080"
+                    }
+                },
+                {
+                    "name": "HTTP",
+                    "properties": {
+                        "priority": 320,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "80"
+                    }
+                }
+            ]
+        },
+        "subnetName": {
+            "value": "VM-Subnet"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
+        },
+        "virtualMachineName": {
+            "value": "adq-az-appvm01"
+        },
+        "virtualMachineName1": {
+            "value": "adq-az-appvm01"
+        },
+        "virtualMachineComputerName1": {
+            "value": "adq-az-appvm01"
+        },
+        "virtualMachineRG": {
+            "value": "adq-deploy-rg"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_DC2s_v2"
+        },
+        "nicDeleteOption": {
+            "value": "Detach"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "adminUsername": {
+            "value": "azureuser"
+        },
+        "adminPassword": {
+            "value": "azureuser@4321"
+        },
+        "patchMode": {
+            "value": "AutomaticByPlatform"
+        },
+        "rebootSetting": {
+            "value": "IfRequired"
+        },
+        "customData": {
+            "value": "IyEvYmluL2Jhc2gKCnNldCAtZQoKIyBJbnN0YWxsIGRlcGVuZGVuY2llcwpzdWRvIGFwdCB1cGRhdGUKc3VkbyBhcHQgaW5zdGFsbCAteSBjdXJsIHNvZnR3YXJlLXByb3BlcnRpZXMtY29tbW9uIG5naW54IGdpdApjdXJsIC1mc1NMIGh0dHBzOi8vZGViLm5vZGVzb3VyY2UuY29tL3NldHVwXzE4LnggfCBzdWRvIC1FIGJhc2ggLQpzdWRvIGFwdCBpbnN0YWxsIC15IG5vZGVqcwoKIyBTZXQgdXAgYXBwbGljYXRpb24Kc3VkbyBta2RpciAtcCAvdmFyL3d3dy9mcm9udGVuZApjZCAvdmFyL3d3dy9mcm9udGVuZApzdWRvIG5wbSBpbml0IC15CnN1ZG8gbnBtIGluc3RhbGwgZXhwcmVzcyBib2R5LXBhcnNlciBtc3NxbApnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL3N1bW11OTcvQXp1cmUtMi10aWVyLUFzc2Vzc21lbnQuZ2l0IC90bXAvYXBwX3Jlc291cmNlcy8Kc3VkbyBtdiAvdG1wL2FwcF9yZXNvdXJjZXMvKiAvdmFyL3d3dy9mcm9udGVuZC8Kc3VkbyBybSAtcmYgL3RtcC9hcHBfcmVzb3VyY2VzCgojIFZlcmlmeSByZXF1aXJlZCBmaWxlcyBleGlzdAppZiBbWyAhIC1mIC92YXIvd3d3L2Zyb250ZW5kL2FwcC5qcyB8fCAhIC1mIC92YXIvd3d3L2Zyb250ZW5kL2luZGV4Lmh0bWwgXV07IHRoZW4KICAgIGVjaG8gIlJlcXVpcmVkIGZpbGVzIChhcHAuanMsIGluZGV4Lmh0bWwpIGFyZSBtaXNzaW5nIGluIC92YXIvd3d3L2Zyb250ZW5kLiIKICAgIGV4aXQgMQpmaQoKc3VkbyBjaG93biAtUiB3d3ctZGF0YTp3d3ctZGF0YSAvdmFyL3d3dy9mcm9udGVuZApzdWRvIGNobW9kIC1SIDc1NSAvdmFyL3d3dy9mcm9udGVuZAoKIyBDcmVhdGUgc3lzdGVtZCBzZXJ2aWNlCnN1ZG8gdGVlIC9ldGMvc3lzdGVtZC9zeXN0ZW0vZnJvbnRlbmQuc2VydmljZSA+IC9kZXYvbnVsbCA8PEVPTApbVW5pdF0KRGVzY3JpcHRpb249RnJvbnRlbmQgTm9kZS5qcyBBcHBsaWNhdGlvbgpBZnRlcj1uZXR3b3JrLnRhcmdldAoKW1NlcnZpY2VdCldvcmtpbmdEaXJlY3Rvcnk9L3Zhci93d3cvZnJvbnRlbmQKRXhlY1N0YXJ0PS91c3IvYmluL25vZGUgYXBwLmpzClJlc3RhcnQ9YWx3YXlzClVzZXI9d3d3LWRhdGEKR3JvdXA9d3d3LWRhdGEKRW52aXJvbm1lbnQ9UE9SVD04MDgwCgpbSW5zdGFsbF0KV2FudGVkQnk9bXVsdGktdXNlci50YXJnZXQKRU9MCgpzdWRvIHN5c3RlbWN0bCBkYWVtb24tcmVsb2FkCnN1ZG8gc3lzdGVtY3RsIGVuYWJsZSBmcm9udGVuZApzdWRvIHN5c3RlbWN0bCBzdGFydCBmcm9udGVuZAoKIyBDb25maWd1cmUgTmdpbngKc3VkbyB0ZWUgL2V0Yy9uZ2lueC9zaXRlcy1hdmFpbGFibGUvZGVmYXVsdCA+IC9kZXYvbnVsbCA8PEVPTApzZXJ2ZXIgewogICAgbGlzdGVuIDgwOwogICAgc2VydmVyX25hbWUgXzsKCiAgICBsb2NhdGlvbiAvIHsKICAgICAgICBwcm94eV9wYXNzIGh0dHA6Ly8xMjcuMC4wLjE6ODA4MDsKICAgICAgICBwcm94eV9odHRwX3ZlcnNpb24gMS4xOwogICAgICAgIHByb3h5X3NldF9oZWFkZXIgVXBncmFkZSBcJGh0dHBfdXBncmFkZTsKICAgICAgICBwcm94eV9zZXRfaGVhZGVyIENvbm5lY3Rpb24gJ3VwZ3JhZGUnOwogICAgICAgIHByb3h5X3NldF9oZWFkZXIgSG9zdCBcJGhvc3Q7CiAgICAgICAgcHJveHlfY2FjaGVfYnlwYXNzIFwkaHR0cF91cGdyYWRlOwogICAgfQp9CkVPTAoKIyBSZXN0YXJ0IE5naW54IHRvIGFwcGx5IGNoYW5nZXMKc3VkbyBuZ2lueCAtdApzdWRvIHN5c3RlbWN0bCByZXN0YXJ0IG5naW54Cg=="
+        },
+        "securityType": {
+            "value": "TrustedLaunch"
+        },
+        "secureBoot": {
+            "value": true
+        },
+        "vTPM": {
+            "value": true
+        },
+        "virtualMachine1Zone": {
+            "value": "1"
+        }
+    }
+}
