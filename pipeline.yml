@@ -10,7 +10,7 @@ variables:
   vnetParametersFile: 'modules/vnet/vnet.parameters.json'                       # Path to VNet parameters file
   appMachineTemplateFile: 'modules/machines/appvm/app.machine.json'                                      # Path to appMachine ARM template file
   appMachineParametersFile: 'modules/machines/appvm/app.machine.parameters.json'                         # Path to appMachine parameters file
-  bastionTemplateFile: 'modules/nastion/bastion.json'                                  # Path to Bastion ARM template file
+  bastionTemplateFile: 'modules/bastion/bastion.json'                                  # Path to Bastion ARM template file
   bastionParametersFile: 'modules/bastion/bastion.parameters.json'                     # Path to Bastion parameters file
   sqlTemplateFile: 'modules/machines/sqlvm/sql.machine.json'                                  # Path to sql ARM template file
   sqlParametersFile: 'modules/machines/sqlvm/sql.machine.parameters.json'                     # Path to sql parameters file
