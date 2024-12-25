@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "centralus"
+    },
+    "virtualNetworks_adq_az_vnet_name": {
+      "value": "adq-az-vnet"
+    },
+    "vnet_cidr": {
+      "value": "10.0.0.0/16"
+    },
+    "bastion_subnet_name": {
+      "value": "AzureBastionSubnet"
+    },
+    "bastion_subnet_cidr": {
+      "value": "10.0.1.0/26"
+    },
+    "VM_subnet_name": {
+      "value": "VM-Subnet"
+    },
+    "VM_subnet_cidr": {
+      "value": "10.0.0.0/24"
+    },
+    "appgateway_subnet_name": {
+      "value": "AppGateway-Subnet"
+    },
+    "appgateway_subnet_cidr": {
+      "value": "10.0.2.0/24"
+    },
+    "applicationGateways_adq_az_appgateway_name": {
+      "value": "adq-az-appgateway"
+    },
+    "publicIPAddresses_adq_az_appgateway_ip_name": {
+      "value": "adq-az-appgateway-ip"
+    }
+  }
+}
