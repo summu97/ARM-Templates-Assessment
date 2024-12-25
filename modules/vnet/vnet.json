@@ -1,0 +1,171 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "centralus",
+      "metadata": {
+        "description": "The Azure region where the virtual network will be created."
+      }
+    },
+    "virtualNetworks_adq_az_vnet_name": {
+      "type": "string",
+      "defaultValue": "adq-az-vnet",
+      "metadata": {
+        "description": "The name of the virtual network."
+      }
+    },
+    "vnet_cidr": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "The CIDR block for the virtual network."
+      }
+    },
+    "bastion_subnet_name": {
+      "type": "string",
+      "defaultValue": "AzureBastionSubnet",
+      "metadata": {
+        "description": "The name of the Bastion subnet."
+      }
+    },
+    "bastion_subnet_cidr": {
+      "type": "string",
+      "defaultValue": "10.0.1.0/26",
+      "metadata": {
+        "description": "The CIDR block for the Bastion subnet."
+      }
+    },
+    "VM_subnet_name": {
+      "type": "string",
+      "defaultValue": "VM-Subnet",
+      "metadata": {
+        "description": "The name of the VM subnet."
+      }
+    },
+    "VM_subnet_cidr": {
+      "type": "string",
+      "defaultValue": "10.0.2.0/24",
+      "metadata": {
+        "description": "The CIDR block for the VM subnet."
+      }
+    },
+    "appgateway_subnet_name": {
+      "type": "string",
+      "defaultValue": "AppGateway-Subnet",
+      "metadata": {
+        "description": "The name of the Application Gateway subnet."
+      }
+    },
+    "appgateway_subnet_cidr": {
+      "type": "string",
+      "defaultValue": "10.0.3.0/24",
+      "metadata": {
+        "description": "The CIDR block for the Application Gateway subnet."
+      }
+    },
+    "publicIPAddresses_adq_az_appgateway_ip_name": {
+      "type": "string",
+      "defaultValue": "adq-az-appgateway-ip",
+      "metadata": {
+        "description": "Name of the public IP address for the application gateway."
+      }
+    },
+    "applicationGateways_adq_az_appgateway_name": {
+      "type": "string",
+      "defaultValue": "adq-az-appgateway",
+      "metadata": {
+        "description": "The name of the application gateway."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2024-01-01",
+      "name": "[parameters('virtualNetworks_adq_az_vnet_name')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "vnet": "adq-az-vnet"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnet_cidr')]"
+          ]
+        },
+        "encryption": {
+          "enabled": false,
+          "enforcement": "AllowUnencrypted"
+        },
+        "subnets": [
+          {
+            "name": "[parameters('bastion_subnet_name')]",
+            "properties": {
+              "addressPrefixes": [
+                "[parameters('bastion_subnet_cidr')]"
+              ],
+              "serviceEndpoints": [],
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+          },
+          {
+            "name": "[parameters('VM_subnet_name')]",
+            "properties": {
+              "addressPrefixes": [
+                "[parameters('VM_subnet_cidr')]"
+              ],
+              "serviceEndpoints": [],
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+          },
+          {
+            "name": "[parameters('appgateway_subnet_name')]",
+            "properties": {
+              "addressPrefixes": [
+                "[parameters('appgateway_subnet_cidr')]"
+              ],
+              "applicationGatewayIPConfigurations": [
+                {
+                  "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_adq_az_appgateway_name')), '/gatewayIPConfigurations/appGatewayIpConfig')]"
+                }
+              ],
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+          }
+        ],
+        "virtualNetworkPeerings": [],
+        "enableDdosProtection": false
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2024-01-01",
+      "name": "[parameters('publicIPAddresses_adq_az_appgateway_ip_name')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      },
+      "zones": [
+        "1",
+        "2",
+        "3"
+      ],
+      "properties": {
+        "publicIPAddressVersion": "IPv4",
+        "publicIPAllocationMethod": "Static",
+        "ipAddress": "48.216.182.111",
+        "idleTimeoutInMinutes": 4,
+        "ipTags": []
+      }
+    }
+  ]
+}
