@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "centralus"
+        },
+        "applicationGatewayName": {
+            "value": "adq-az-applb"
+        },
+        "tier": {
+            "value": "Standard_v2"
+        },
+        "skuSize": {
+            "value": "Standard_v2"
+        },
+        "capacity": {
+            "value": 2
+        },
+        "subnetName": {
+            "value": "AppGateway-Subnet"
+        },
+        "zones": {
+            "value": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "publicIpZones": {
+            "value": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "publicIpAddressName": {
+            "value": [
+                "adq-az-applb-ip"
+            ]
+        },
+        "sku": {
+            "value": [
+                "Standard"
+            ]
+        },
+        "allocationMethod": {
+            "value": [
+                "Static"
+            ]
+        },
+        "ipAddressVersion": {
+            "value": [
+                "IPv4"
+            ]
+        },
+        "privateIpAddress": {
+            "value": []
+        }
+    }
+}
