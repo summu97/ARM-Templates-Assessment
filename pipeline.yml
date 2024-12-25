@@ -6,14 +6,14 @@ variables:
   subscriptionId: '51f41f85-b52c-4d95-a2f5-28303cbdb6ec'           # Replace with your Azure subscription ID
   resourceGroupName: 'adq-deploy-rg'                               # Replace with your Resource Group name
   location: 'Central US'                                              # Replace with your Azure region
-  vnetTemplateFile: 'vnet.json'                                    # Path to VNet ARM template file
-  vnetParametersFile: 'vnet.parameters.json'                       # Path to VNet parameters file
-  machinesTemplateFile: 'machines.json'                                      # Path to machines ARM template file
-  machinesParametersFile: 'machines.parameters.json'                         # Path to machines parameters file
-  bastionTemplateFile: 'bastion.json'                                  # Path to Bastion ARM template file
-  bastionParametersFile: 'bastion.parameters.json'                     # Path to Bastion parameters file
-  sqlTemplateFile: 'sql.machine.json'                                  # Path to sql ARM template file
-  sqlParametersFile: 'sql.machine.parameters.json'                     # Path to sql parameters file
+  vnetTemplateFile: 'modules/vnet/vnet.json'                                    # Path to VNet ARM template file
+  vnetParametersFile: 'modules/vnet/vnet.parameters.json'                       # Path to VNet parameters file
+  appMachineTemplateFile: 'modules/machines/appvm/app.machine.json'                                      # Path to appMachine ARM template file
+  appMachineParametersFile: 'modules/machines/appvm/app.machine.parameters.json'                         # Path to appMachine parameters file
+  bastionTemplateFile: 'modules/nastion/bastion.json'                                  # Path to Bastion ARM template file
+  bastionParametersFile: 'modules/bastion/bastion.parameters.json'                     # Path to Bastion parameters file
+  sqlTemplateFile: 'modules/machines/sqlvm/sql.machine.json'                                  # Path to sql ARM template file
+  sqlParametersFile: 'modules/machines/sqlvm/sql.machine.parameters.json'                     # Path to sql parameters file
 
 
 stages:
@@ -38,27 +38,6 @@ stages:
         deploymentMode: 'Incremental'
         additionalArguments: '--verbose'
 
-- stage: Deploymachines
-  displayName: 'Deploy machines'
-  jobs:
-  - job: DeployResources
-    displayName: 'Deploy machines & Resources'
-    steps:
-    - checkout: self  # Ensures code is available on the agent
-    - task: AzureResourceManagerTemplateDeployment@3
-      inputs:
-        deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: '$(azureServiceConnection)'
-        subscriptionId: '$(subscriptionId)'
-        action: 'Create Or Update Resource Group'
-        resourceGroupName: '$(resourceGroupName)'
-        location: '$(location)'
-        templateLocation: 'Linked artifact'
-        csmFile: '$(machinesTemplateFile)'
-        csmParametersFile: '$(machinesParametersFile)'
-        deploymentMode: 'Incremental'
-        additionalArguments: '--verbose'
-
 - stage: DeployBastionHost
   displayName: 'Deploy BastionHost'
   jobs:
@@ -77,6 +56,27 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(bastionTemplateFile)'
         csmParametersFile: '$(bastionParametersFile)'
+        deploymentMode: 'Incremental'
+        additionalArguments: '--verbose'
+
+- stage: DeployappMachine
+  displayName: 'Deploy appMachine'
+  jobs:
+  - job: DeployResources
+    displayName: 'Deploy appMachine & Resources'
+    steps:
+    - checkout: self  # Ensures code is available on the agent
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '$(azureServiceConnection)'
+        subscriptionId: '$(subscriptionId)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(appMachineTemplateFile)'
+        csmParametersFile: '$(appMachineParametersFile)'
         deploymentMode: 'Incremental'
         additionalArguments: '--verbose'
 
