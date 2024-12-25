@@ -73,7 +73,7 @@
             "value": "adq-az-appvm01"
         },
         "virtualMachineRG": {
-            "value": "adq-deploy-rg"
+            "value": "adq-appdeploy-rg"
         },
         "osDiskType": {
             "value": "Premium_LRS"
