@@ -1,0 +1,321 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "applicationGatewayName": {
+            "type": "string"
+        },
+        "tier": {
+            "type": "string"
+        },
+        "skuSize": {
+            "type": "string"
+        },
+        "capacity": {
+            "type": "int",
+            "defaultValue": 2
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "zones": {
+            "type": "array"
+        },
+        "publicIpZones": {
+            "type": "array"
+        },
+        "publicIpAddressName": {
+            "type": "array"
+        },
+        "sku": {
+            "type": "array"
+        },
+        "allocationMethod": {
+            "type": "array"
+        },
+        "ipAddressVersion": {
+            "type": "array"
+        },
+        "privateIpAddress": {
+            "type": "array"
+        }
+    },
+    "variables": {
+        "vnetId": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet",
+        "publicIPRef": [
+            "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName')[0])]"
+        ],
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "applicationGatewayId": "[resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewayName'))]"
+    },
+    "resources": [
+        {
+            "name": "[parameters('applicationGatewayName')]",
+            "type": "Microsoft.Network/applicationGateways",
+            "apiVersion": "2023-02-01",
+            "location": "[parameters('location')]",
+            "zones": "[parameters('zones')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName')[0])]"
+            ],
+            "tags": {},
+            "properties": {
+                "sku": {
+                    "name": "[parameters('skuSize')]",
+                    "tier": "[parameters('tier')]",
+                    "capacity": "[parameters('capacity')]"
+                },
+                "gatewayIPConfigurations": [
+                    {
+                        "name": "appGatewayIpConfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendIPConfigurations": [
+                    {
+                        "name": "appGwPublicFrontendIpIPv4",
+                        "properties": {
+                            "PublicIPAddress": {
+                                "id": "[variables('publicIPRef')[0]]"
+                            }
+                        }
+                    }
+                ],
+                "frontendPorts": [
+                    {
+                        "name": "port_80",
+                        "properties": {
+                            "Port": 80
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "app-backend-pool",
+                        "properties": {
+                            "backendAddresses": []
+                        }
+                    }
+                ],
+                "backendHttpSettingsCollection": [
+                    {
+                        "name": "app-lb--backend",
+                        "properties": {
+                            "Port": 8080,
+                            "Protocol": "Http",
+                            "cookieBasedAffinity": "Disabled",
+                            "requestTimeout": 20
+                        }
+                    }
+                ],
+                "backendSettingsCollection": [],
+                "httpListeners": [
+                    {
+                        "name": "app-lb-listner",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('applicationGatewayId'), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]"
+                            },
+                            "frontendPort": {
+                                "id": "[concat(variables('applicationGatewayId'), '/frontendPorts/port_80')]"
+                            },
+                            "protocol": "Http",
+                            "sslCertificate": null,
+                            "customErrorConfigurations": []
+                        }
+                    }
+                ],
+                "listeners": [],
+                "requestRoutingRules": [
+                    {
+                        "Name": "app-lb-route",
+                        "properties": {
+                            "RuleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/app-lb-listner')]"
+                            },
+                            "priority": 100,
+                            "backendAddressPool": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/app-backend-pool')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/app-lb--backend')]"
+                            }
+                        }
+                    }
+                ],
+                "routingRules": [],
+                "enableHttp2": true,
+                "sslCertificates": [],
+                "probes": []
+            }
+        },
+        {
+            "apiVersion": "2020-08-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIpAddressName')[0]]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('sku')[0]]"
+            },
+            "zones": "[parameters('publicIpZones')]",
+            "properties": {
+                "publicIPAddressVersion": "[parameters('ipAddressVersion')[0]]",
+                "publicIPAllocationMethod": "[parameters('allocationMethod')[0]]"
+            }
+        },
+        {
+            "name": "adq-az-appvm01-interface-20241226003458",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "dependsOn": [
+                "[concat('Microsoft.Network/applicationGateways/', parameters('applicationGatewayName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "name": "adq-az-appvm01-interface",
+                            "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/networkInterfaces/adq-az-appvm01-interface",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "resourceGuid": "edf46c37-c537-4977-96a8-4e22372c1f06",
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/networkInterfaces/adq-az-appvm01-interface/ipConfigurations/ipconfig1",
+                                        "etag": "W/\"812402a2-6948-4e34-aef8-fc44c445fa54\"",
+                                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+                                        "properties": {
+                                            "provisioningState": "Succeeded",
+                                            "privateIPAddress": "10.0.0.4",
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet/subnets/VM-Subnet"
+                                            },
+                                            "primary": true,
+                                            "privateIPAddressVersion": "IPv4",
+                                            "applicationGatewayBackendAddressPools": [
+                                                {
+                                                    "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/applicationGateways/adq-az-applb/backendAddressPools/app-backend-pool"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": [],
+                                    "appliedDnsServers": [],
+                                    "internalDomainNameSuffix": "khrr1d12p1gutgts0wbtyx4elf.gx.internal.cloudapp.net"
+                                },
+                                "macAddress": "60-45-BD-30-91-20",
+                                "enableAcceleratedNetworking": true,
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/networkSecurityGroups/ad-z-appvm01-nsg"
+                                },
+                                "primary": true,
+                                "virtualMachine": {
+                                    "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Compute/virtualMachines/adq-az-appvm01"
+                                },
+                                "hostedWorkloads": [],
+                                "tapConfigurations": []
+                            },
+                            "type": "Microsoft.Network/networkInterfaces",
+                            "location": "centralus",
+                            "apiVersion": "2018-10-01",
+                            "dependsOn": []
+                        }
+                    ]
+                },
+                "parameters": {}
+            },
+            "resourceGroup": "adq-appdeploy-rg"
+        },
+        {
+            "name": "adq-az-appvm02-interface-20241226003458",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "dependsOn": [
+                "[concat('Microsoft.Network/applicationGateways/', parameters('applicationGatewayName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "name": "adq-az-appvm02-interface",
+                            "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/networkInterfaces/adq-az-appvm02-interface",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "resourceGuid": "eeb477c4-b7ab-42d2-8ef9-a61275ea3ea4",
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/networkInterfaces/adq-az-appvm02-interface/ipConfigurations/ipconfig1",
+                                        "etag": "W/\"bce0a802-d847-434a-98bd-3164e7f42141\"",
+                                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+                                        "properties": {
+                                            "provisioningState": "Succeeded",
+                                            "privateIPAddress": "10.0.0.7",
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet/subnets/VM-Subnet"
+                                            },
+                                            "primary": true,
+                                            "privateIPAddressVersion": "IPv4",
+                                            "applicationGatewayBackendAddressPools": [
+                                                {
+                                                    "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/applicationGateways/adq-az-applb/backendAddressPools/app-backend-pool"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": [],
+                                    "appliedDnsServers": [],
+                                    "internalDomainNameSuffix": "khrr1d12p1gutgts0wbtyx4elf.gx.internal.cloudapp.net"
+                                },
+                                "macAddress": "00-0D-3A-96-7F-8E",
+                                "enableAcceleratedNetworking": true,
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/networkSecurityGroups/ad-z-appvm01-nsg"
+                                },
+                                "primary": true,
+                                "virtualMachine": {
+                                    "id": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Compute/virtualMachines/adq-az-appvm02"
+                                },
+                                "hostedWorkloads": [],
+                                "tapConfigurations": []
+                            },
+                            "type": "Microsoft.Network/networkInterfaces",
+                            "location": "centralus",
+                            "apiVersion": "2018-10-01",
+                            "dependsOn": []
+                        }
+                    ]
+                },
+                "parameters": {}
+            },
+            "resourceGroup": "adq-appdeploy-rg"
+        }
+    ]
+}
