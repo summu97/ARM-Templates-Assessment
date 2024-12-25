@@ -6,7 +6,7 @@
             "value": "centralus"
         },
         "resourceGroup": {
-            "value": "adq-deploy-rg"
+            "value": "adq-appdeploy-rg"
         },
         "bastionHostName": {
             "value": "adq-az-bastion"
