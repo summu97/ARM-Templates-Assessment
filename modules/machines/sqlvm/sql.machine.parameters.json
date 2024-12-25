@@ -48,7 +48,7 @@
             "value": "VM-Subnet"
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
+            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-appdeploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet"
         },
         "sqlvirtualMachineName": {
             "value": "adq-az-sqlvm"
@@ -69,7 +69,7 @@
             "value": "Delete"
         },
         "virtualMachineSize": {
-            "value": "Standard_DC2s_v2"
+            "value": "Standard_DS1_v2"
         },
         "nicDeleteOption": {
             "value": "Detach"
