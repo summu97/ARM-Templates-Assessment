@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "centralus"
+        },
+        "resourceGroup": {
+            "value": "adq-deploy-rg"
+        },
+        "bastionHostName": {
+            "value": "adq-az-bastion"
+        },
+        "bastionHostSku": {
+            "value": "Standard"
+        },
+        "bastionHostScaleUnits": {
+            "value": 2
+        },
+        "enableIpConnect": {
+            "value": false
+        },
+        "enableTunneling": {
+            "value": false
+        },
+        "enableShareableLink": {
+            "value": false
+        },
+        "subnetId": {
+            "value": "/subscriptions/51f41f85-b52c-4d95-a2f5-28303cbdb6ec/resourceGroups/adq-deploy-rg/providers/Microsoft.Network/virtualNetworks/adq-az-vnet/subnets/AzureBastionSubnet"
+        },
+        "enableKerberos": {
+            "value": false
+        },
+        "disableCopyPaste": {
+            "value": false
+        },
+        "enableSessionRecording": {
+            "value": false
+        },
+        "enablePrivateOnlyBastion": {
+            "value": false
+        },
+        "zones": {
+            "value": []
+        },
+        "publicIpZones": {
+            "value": [
+                "1",
+                "3",
+                "2"
+            ]
+        },
+        "publicIpAddressName": {
+            "value": "adq-az-bastion-ip"
+        }
+    }
+}
