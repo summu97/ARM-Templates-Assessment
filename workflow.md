@@ -7,7 +7,7 @@
 ### Step 01: Create Project in Azure DevOps
 
 1. **Login to Azure DevOps**:
-   - Open your browser and navigate to [Azure DevOps](https://dev.azure.com/).
+   - Open your browser and navigate to [Azure DevOps] -- https://dev.azure.com/.
    - Sign in with your Azure DevOps account credentials.
 
 2. **Create a New Project**:
