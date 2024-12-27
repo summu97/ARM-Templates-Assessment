@@ -1,7 +1,5 @@
 # Azure DevOps Project Setup and Pipeline Execution
 
-This guide outlines the steps required to create an Azure DevOps project, add a service connection, clone a GitHub repository, and create and run a pipeline using a YAML configuration file.
-
 ---
 
 ## Steps
