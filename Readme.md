@@ -62,7 +62,7 @@
 
 3. **Select Existing YAML File**:
    - Choose **Existing Azure Pipelines YAML file** to link the pipeline to an existing YAML configuration.
-   - Browse for the YAML file (e.g., `deploy-pipelines.yml`) in your repository and select it.
+   - Browse for the YAML file (e.g., `deploy-pipeline.yml`) in your repository and select it.
 
 4. **Run the Pipeline**:
    - After selecting the YAML file, click **Run** to trigger the pipeline.
@@ -72,7 +72,7 @@
 ## Important Notes
 
 - **Update Configuration File**:
-   Before running the pipeline, make sure to modify the following parameters in the `azure-pipeline.json` configuration file:
+   Before running the pipeline, make sure to modify the following parameters in the `deploy-pipeline.yml` & `.json` configuration files:
    - Update the **azureServiceConnection(ID)** value to reflect the newly created service connection ID.
    - Ensure **file paths**, **resourceGroupName**, and any other parameters are set to the correct values relevant to your project.
 
