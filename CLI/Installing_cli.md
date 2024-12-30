@@ -9,8 +9,12 @@
    ```bash
    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
- 
-2. **Login to Azure account:**
+2. **To check the version of the Azure CLI:**
+   
+   ```bash
+   az --version
+
+3. **Login to Azure account:**
    
    Run the following command to Login to Azure account on your system:
 
