@@ -34,7 +34,7 @@
    ```bash
    az network nsg rule create --resource-group <RESOURCE_GROUP> --nsg-name <NSG_NAME> --name <RULE_NAME> --priority <PRIORITY> --direction <Inbound|Outbound> --access <Allow|Deny> --protocol <Tcp|Udp|*|Icmp> --source-address-prefixes <SOURCE> --source-port-ranges <SOURCE_PORT> --destination-address-prefixes <DESTINATION> --destination-port-ranges <DESTINATION_PORT>
 
-##(Example):
+**(Example):**
 
    ```bash
    az network nsg rule create --resource-group myResourceGroup --nsg-name myNSG --name AllowSSH --priority 100 --direction Inbound --access Allow --protocol Tcp --source-address-prefixes '*' --source-port-ranges '*' --destination-address-prefixes '*' --destination-port-ranges 22
@@ -85,7 +85,7 @@
    ```bash
    az network watcher flow-log configure --resource-group <RESOURCE_GROUP> --nsg <NSG_NAME> --enabled true --storage-account <STORAGE_ACCOUNT> --retention 30
 
-##(View Current Flow Log Configuration):
+**(View Current Flow Log Configuration):**
 
    ```bash
    az network watcher flow-log show --resource-group <RESOURCE_GROUP> --nsg <NSG_NAME>
