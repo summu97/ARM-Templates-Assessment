@@ -69,7 +69,7 @@
 
 ## Blob Container Management
 
-1.**Create a Blob Container:**
+1. **Create a Blob Container:**
 
    ```bash
    az storage container create --account-name <STORAGE_ACCOUNT_NAME> --name <CONTAINER_NAME> --public-access <ACCESS_LEVEL>
