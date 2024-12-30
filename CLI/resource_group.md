@@ -35,12 +35,10 @@
    ```bash
    az group show --name <RESOURCE_GROUP_NAME>
 
-Check if a Resource Group Exists:
+2. **Check if a Resource Group Exists:**
 
    ```bash
-   az login
-
-az group exists --name <RESOURCE_GROUP_NAME>
+   az group exists --name <RESOURCE_GROUP_NAME>
 
 ## Manage Tags
 
