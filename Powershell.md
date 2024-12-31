@@ -1,16 +1,23 @@
-# Azure PowerShell Installation Guide (Windows)
+# PowerShell Command Repository
 
-## Step 1: Open PowerShell as Administrator
+This repository contains useful PowerShell scripts and commands for automation, system management, and more. Whether you're a beginner or an advanced user, you'll find valuable resources here.
 
-1. Click the **Start** button.
-2. Search for **PowerShell**.
-3. Right-click on **Windows PowerShell** and select **Run as Administrator**.
+---
 
-## Step 2: Install the Azure PowerShell Module
+## 📂 Repository Structure
 
-Run the following command to install the `Az` module:
+- **Scripts/**: Contains reusable PowerShell scripts for various tasks.
+- **Modules/**: Custom PowerShell modules for extended functionality.
+- **Examples/**: Demonstrations of how to use PowerShell for common scenarios.
+- **Documentation/**: Detailed explanations of commands and scripts.
 
-```powershell
-Install-Module -Name Az -AllowClobber -Force -Scope CurrentUser
+---
 
+## 🛠️ Prerequisites
 
+To use the scripts in this repository, ensure the following:
+
+- **PowerShell Version**: 5.1 or higher (For cross-platform usage, [PowerShell Core](https://github.com/PowerShell/PowerShell) is recommended).
+- **Modules**: Install required modules using:
+  ```powershell
+  Install-Module -Name <ModuleName> -Force
