@@ -1,23 +1,51 @@
-# PowerShell Command Repository
+# Azure PowerShell Installation Guide (Windows)
 
-This repository contains useful PowerShell scripts and commands for automation, system management, and more. Whether you're a beginner or an advanced user, you'll find valuable resources here.
+## Step 1: Open PowerShell as Administrator
 
----
+1. Click the **Start** button.
+2. Search for **PowerShell**.
+3. Right-click on **Windows PowerShell** and select **Run as Administrator**.
 
-## 📂 Repository Structure
+## Step 2: Install the Azure PowerShell Module
 
-- **Scripts/**: Contains reusable PowerShell scripts for various tasks.
-- **Modules/**: Custom PowerShell modules for extended functionality.
-- **Examples/**: Demonstrations of how to use PowerShell for common scenarios.
-- **Documentation/**: Detailed explanations of commands and scripts.
+Run the following command to install the `Az` module:
 
----
+```powershell
+Install-Module -Name Az -AllowClobber -Force -Scope CurrentUser
+```
+## Step 3: Verify the Installation
+Once the installation is complete, verify that the module has been installed by running:
 
-## 🛠️ Prerequisites
+```powershell
+Get-Module -ListAvailable -Name Az
+```
+## Step 4: Import the Az Module
 
-To use the scripts in this repository, ensure the following:
+If the module is not automatically imported, you can import it manually by running:
 
-- **PowerShell Version**: 5.1 or higher (For cross-platform usage, [PowerShell Core](https://github.com/PowerShell/PowerShell) is recommended).
-- **Modules**: Install required modules using:
-  ```powershell
-  Install-Module -Name <ModuleName> -Force
+```powershell
+Import-Module Az
+```
+## Step 5: Sign in to Azure
+To authenticate and connect to Azure, use the following command:
+
+```powershell
+Connect-AzAccount
+```
+## Step 6: Create a Resource Group
+To create a new resource group, use the New-AzResourceGroup cmdlet.
+
+```powershell
+New-AzResourceGroup -Name "MyResourceGroup" -Location "EastUS"
+```
+## Step 7: Deploy Resources Using ARM Template
+
+```powershell
+New-AzResourceGroupDeployment -ResourceGroupName "MyResourceGroup" -TemplateFile "C:\path\to\template.json" -TemplateParameterFile "C:\path\to\parameters.json"
+```
+## Step 8: Check Deployment Status(Optional)
+After running the command, you can check the status of the deployment using:
+
+```powershell
+Get-AzResourceGroupDeployment -ResourceGroupName "MyResourceGroup"
+```
